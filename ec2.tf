@@ -17,9 +17,15 @@ resource "aws_instance" "od" {
   instance_type          = var.INSTANCE_TYPE
   vpc_security_group_ids = [aws_security_group.allow_app.id]
   subnet_id              = element(data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS, count.index)
-
-  tags = {
-    Name = "${var.COMPONENT}-${var.ENV}"
-  }
 }
 
+locals {
+  ALL_INSTANCE_IDS = concat(aws_instance.od.*.id, aws_spot_instance_request.spot.*.spot_instance_id)
+}
+
+resource "aws_ec2_tag" "name-tag" {
+  count       = count(local.ALL_INSTANCE_IDS)
+  resource_id = element(local.ALL_INSTANCE_IDS, count.index)
+  key         = "Name"
+  value       = "${var.COMPONENT}-${var.ENV}"
+}
