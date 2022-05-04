@@ -1,4 +1,7 @@
 resource "null_resource" "app-deploy" {
+  triggers = {
+    abc = var.APP_VERSION
+  }
   count = var.SPOT_INSTANCE_COUNT + var.OD_INSTANCE_COUNT
   provisioner "remote-exec" {
     connection {
