@@ -24,7 +24,7 @@ locals {
 }
 
 resource "aws_ec2_tag" "name-tag" {
-  count       = count(local.ALL_INSTANCE_IDS)
+  count       = var.SPOT_INSTANCE_COUNT + var.OD_INSTANCE_COUNT
   resource_id = element(local.ALL_INSTANCE_IDS, count.index)
   key         = "Name"
   value       = "${var.COMPONENT}-${var.ENV}"
