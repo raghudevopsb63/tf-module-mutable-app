@@ -19,10 +19,6 @@ resource "aws_instance" "od" {
   subnet_id              = element(data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS, count.index)
 }
 
-locals {
-  ALL_INSTANCE_IDS = concat(aws_instance.od.*.id, aws_spot_instance_request.spot.*.spot_instance_id)
-}
-
 resource "aws_ec2_tag" "name-tag" {
   count       = var.SPOT_INSTANCE_COUNT + var.OD_INSTANCE_COUNT
   resource_id = element(local.ALL_INSTANCE_IDS, count.index)
