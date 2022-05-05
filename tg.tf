@@ -8,7 +8,7 @@ resource "aws_lb_target_group" "app" {
     healthy_threshold   = 2
     interval            = 5
     path                = "/health"
-    timeout             = 5
+    timeout             = 4
     unhealthy_threshold = 2
 
   }
