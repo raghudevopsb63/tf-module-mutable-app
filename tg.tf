@@ -9,7 +9,7 @@ resource "aws_lb_target_group_attachment" "instance-attach" {
   count            = var.SPOT_INSTANCE_COUNT + var.OD_INSTANCE_COUNT
   target_group_arn = aws_lb_target_group.app.arn
   target_id        = element(local.ALL_INSTANCE_IDS, count.index)
-  port             = 8080
+  port             = var.APP_PORT
 }
 
 resource "aws_lb_listener_rule" "app_rule" {
