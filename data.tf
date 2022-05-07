@@ -16,6 +16,16 @@ data "terraform_remote_state" "alb" {
   }
 }
 
+data "terraform_remote_state" "db" {
+  backend = "s3"
+  config = {
+    bucket = "terraform-b63"
+    key    = "db/${var.ENV}/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+
 data "aws_ami" "ami" {
   most_recent = true
   name_regex  = "base-with-ansible"
