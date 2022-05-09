@@ -25,6 +25,15 @@ data "terraform_remote_state" "db" {
   }
 }
 
+data "terraform_remote_state" "iam" {
+  backend = "s3"
+  config = {
+    bucket = "terraform-b63"
+    key    = "iam/${var.ENV}/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 
 data "aws_ami" "ami" {
   most_recent = true
