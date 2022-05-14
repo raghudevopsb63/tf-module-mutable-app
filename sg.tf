@@ -19,6 +19,14 @@ resource "aws_security_group" "allow_app" {
     cidr_blocks = [data.terraform_remote_state.vpc.outputs.VPC_CIDR, var.WORKSTATION_IP]
   }
 
+  ingress {
+    description = "PROMETHEUS"
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = [data.terraform_remote_state.vpc.outputs.VPC_CIDR, var.WORKSTATION_IP]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0

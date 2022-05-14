@@ -8,4 +8,5 @@ variable "WORKSTATION_IP" {}
 variable "APP_VERSION" {}
 variable "LB_TYPE" {}
 variable "APP_TYPE" {}
+variable "PROMETHEUS_IP" {}
 
